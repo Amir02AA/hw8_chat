@@ -1,0 +1,16 @@
+{
+  "name": "hw8-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tail": "npx tailwindcss -i ./assets/input.css -o ./front/style.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tailwindcss": "^3.3.2"
+  }
+}

@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+}
+
+header a {
+    @apply text-white opacity-50 px-2 py-2 text-lg
+}
+
+header a:hover{
+    @apply opacity-100
+}
+
+.prof{
+    width: 150px;
+    min-width: 150px;
+    height: 150px;
+}
+
+.px-30percent{
+    padding-left: 30%;
+    padding-right: 30%;
+}
