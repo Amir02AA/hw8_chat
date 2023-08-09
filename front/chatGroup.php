@@ -7,15 +7,15 @@ if (isset($_POST['submit'])) {
             addMsg($_POST['msg'], $_FILES['pic']['name']);
             if (!is_dir("../UsersData/msg Images/")) mkdir("../UsersData/msg Images/");
             move_uploaded_file($_FILES['pic']['tmp_name'], "../UsersData/msg Images/" . $_FILES['pic']['name']);
-        }else{
+        } else {
             $error = imageErrorCheck($_FILES['pic']['name'], $_FILES['pic']['size']);
             $error = "<label class='text-red-800'>$error</label>";
         }
-    } elseif (strlen($_POST['msg']) <= 100){
+    } elseif (strlen($_POST['msg']) <= 100) {
         addMsg($_POST['msg']);
     }
 }
-if (isset($_POST['delete']) && isAdmin()){
+if (isset($_POST['delete']) && isAdmin()) {
     deleteMsg($_POST['delete']);
 }
 ?>
@@ -69,15 +69,18 @@ if (isset($_POST['delete']) && isAdmin()){
                             <img
                                 src="<?= getProfByUser($massage['sender']) ?>"
                                 alt="My profile" class="w-14 h-14 rounded-full order-2">
-                            <?php if (isAdmin()){ ?>
-                            <form method="post">
-                                <button type="submit" name="delete" value="<?=$massage['id']?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                    </svg>
-                                </button>
-                            </form>
+                            <?php if (isAdmin()) { ?>
+                                <form method="post">
+                                    <button type="submit" name="delete" value="<?= $massage['id'] ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                                             class="bi bi-x-circle" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path
+                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </button>
+                                </form>
                             <?php } ?>
                         </div>
                     </div>
@@ -104,15 +107,18 @@ if (isset($_POST['delete']) && isAdmin()){
                             <img
                                 src="<?= getProfByUser($massage['sender']) ?>"
                                 alt="My profile" class="w-14 h-14 rounded-full order-1">
-                            <?php if (isAdmin()){ ?>
-                            <form method="post">
-                                <button type="submit" name="delete" value="<?=$massage['id']?>">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                                    </svg>
-                                </button>
-                            </form>
+                            <?php if (isAdmin()) { ?>
+                                <form method="post">
+                                    <button type="submit" name="delete" value="<?= $massage['id'] ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
+                                             class="bi bi-x-circle" viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                            <path
+                                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                        </svg>
+                                    </button>
+                                </form>
                             <?php } ?>
                         </div>
 
@@ -121,7 +127,7 @@ if (isset($_POST['delete']) && isAdmin()){
             <?php } ?>
         </div>
     </section>
-    <section class="<?= (isBlocked(getUserData()['userName']))?"hidden":"" ?>">
+    <section class="<?= (isBlocked(getUserData()['userName'])) ? "hidden" : "" ?>">
         <div class="bg-gray-600 px-4 pt-4 mb-2 sm:mb-0">
             <span id="msgSpan" class="text-green-700 bg-gray-200 py-2 px-2 rounded font-bold">100
             </span>
