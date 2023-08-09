@@ -2,10 +2,10 @@
 session_start();
 include_once '../back/validation.php';
 
-$jsonArray = [];
+$usersArray = [];
 
 if (is_file('userData.json')) {
-    $jsonArray = json_decode(file_get_contents('userData.json'), true);
+    $usersArray = json_decode(file_get_contents('userData.json'), true);
 }
 
 if (isset($_POST['submit'])) {
@@ -22,8 +22,8 @@ if (isset($_POST['submit'])) {
     $errors = checkSignUpErrors($user);
 
     if (!$errors) {
-        $jsonArray[] = $user;
-        file_put_contents('userData.json', json_encode($jsonArray, JSON_PRETTY_PRINT));
+        $usersArray[] = $user;
+        file_put_contents('userData.json', json_encode($usersArray, JSON_PRETTY_PRINT));
     } else {
         $htmlErrors = "";
         foreach ($errors as $error) {

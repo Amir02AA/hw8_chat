@@ -7,7 +7,7 @@ if (is_file('userData.json')) {
 
 function checkSignUpErrors(array $user): array|false
 {
-    global $jsonArray;
+    global $usersArray;
 
     $errors = [];
 
@@ -30,11 +30,11 @@ function checkSignUpErrors(array $user): array|false
 
 function checkLoginErrors(array $user)
 {
-    global $jsonArray;
+    global $usersArray;
     if ($user['userName']=="" || $user['password']==""){
         return "Please Enter your User Name AND Password";
     }
-    foreach ($jsonArray as $userData) {
+    foreach ($usersArray as $userData) {
         if ($userData['userName'] == $user['userName'] && $userData['password'] == $user['password']) {
             return false;
         }
@@ -44,9 +44,9 @@ function checkLoginErrors(array $user)
 
 function userNameError(string $userName): string
 {
-    global $jsonArray;
+    global $usersArray;
     $userName_is_unique = true;
-    foreach ($jsonArray as $userData) {
+    foreach ($usersArray as $userData) {
         if ($userData['userName'] == $userName) {
             $userName_is_unique = false;
             break;
@@ -67,9 +67,9 @@ function userNameError(string $userName): string
 
 function emailError(string $email): string
 {
-    global $jsonArray;
+    global $usersArray;
     $email_is_unique = true;
-    foreach ($jsonArray as $userData) {
+    foreach ($usersArray as $userData) {
         if ($userData['email'] == $email) {
             $email_is_unique = false;
             break;

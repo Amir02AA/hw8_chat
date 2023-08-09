@@ -29,8 +29,8 @@ $imageTypes = ['png', 'jpeg', 'jpg', 'icon'];
 
 function getUsersArray(): array
 {
-    global $jsonArray;
-    return $jsonArray;
+    global $usersArray;
+    return $usersArray;
 }
 
 function getUserData()
@@ -63,11 +63,11 @@ function getImages()
 
 function saveChangesProfile(): void
 {
-    global $jsonArray, $userData;
-    foreach ($jsonArray as $key => $item) {
+    global $usersArray, $userData;
+    foreach ($usersArray as $key => $item) {
         if ($item['userName'] == $userData['userName']) {
-            $jsonArray[$key] = $userData;
-            file_put_contents('../front/userData.json', json_encode($jsonArray, JSON_PRETTY_PRINT));
+            $usersArray[$key] = $userData;
+            file_put_contents('../front/userData.json', json_encode($usersArray, JSON_PRETTY_PRINT));
         }
     }
 }
@@ -125,8 +125,8 @@ function getMsg(){
 
 function getProfByUser($userName)
 {
-    global $jsonArray;
-    foreach ($jsonArray as $key => $item) {
+    global $usersArray;
+    foreach ($usersArray as $key => $item) {
         if ($item['userName'] == $userName) {
             if ((@$item['images']) != []){
                 return $item['images'][0];
@@ -149,8 +149,8 @@ function isAdmin(){
 }
 
 function isBlocked($userName){
-    global $jsonArray;
-    foreach ($jsonArray as $key => $item) {
+    global $usersArray;
+    foreach ($usersArray as $key => $item) {
         if ($item['userName'] == $userName) {
            return $item['blocked'];
         }
@@ -158,10 +158,10 @@ function isBlocked($userName){
 }
 
 function blockToggle($userName){
-    global $jsonArray;
-    foreach ($jsonArray as $key => $item) {
+    global $usersArray;
+    foreach ($usersArray as $key => $item) {
         if ($item['userName'] == $userName) {
-            $jsonArray[$key]['blocked'] = !$jsonArray[$key]['blocked'];
+            $usersArray[$key]['blocked'] = !$usersArray[$key]['blocked'];
         }
     }
     saveChangesProfile();
