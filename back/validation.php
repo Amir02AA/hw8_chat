@@ -1,14 +1,13 @@
 <?php
 $usersArray = [];
 
-if (is_file('userData.json')) {
-    $usersArray = json_decode(file_get_contents('userData.json'), true);
+if (is_file('../back/userData.json')) {
+    $usersArray = json_decode(file_get_contents('../back/userData.json'), true);
 }
 
-function checkSignUpErrors(array $user): array|false
-{
-    global $usersArray;
 
+function checkSignUpErrors(array $user): array|false
+{ 
     $errors = [];
 
 

@@ -2,64 +2,101 @@
 
 class DatabaseManager implements DataSaverInterface
 {
+    private static DataSaverInterface|null $instance = null;
+    private string $dns = "mysql:host=localhost;";
+    private string $user = "root";
+    private  PDO $pdo;
 
-    private static string $dns = "mysql:host=localhost;";
-    private static string $user = "root";
-    private static PDO $pdo;
-
-    public static function start()
+    public  function __cunstruct()
     {
-        self::$pdo = new PDO(self::$dns, self::$user);
-        self::createDataBase();
+        $this->pdo = new PDO($this->dns, $this->user);
+        $this->createDataBase();
     }
 
-    private static function createDataBase(): void
+    private function createDataBase(): void
     {
-        $isAvailable = self::$pdo->query("show databases like 'chattest'", PDO::FETCH_ASSOC)->fetch();
+        $isAvailable = $this->pdo->query("show databases like 'chattest'", PDO::FETCH_ASSOC)->fetch();
         if (!$isAvailable) {
-            self::$pdo->query('create database "chat_database";')->execute();
+            $this->pdo->query('create database "chat_database";')->execute();
         }
-        self::$pdo->query("use chattest;")->execute();
+        $this->pdo->query("use chattest;")->execute();
     }
 
-    public static function getMassages(): array|false
+    public  function getMassages(): array|false
     {
-        return self::$pdo->query("select * from massages;", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->pdo->query("select * from massages;", PDO::FETCH_ASSOC)->fetchAll();
     }
 
-    public static function getUsers(): array|false
+    public  function getUsers(): array|false
     {
-        return self::$pdo->query("select * from users;", PDO::FETCH_ASSOC)->fetchAll();
+        return $this->pdo->query("select * from users;", PDO::FETCH_ASSOC)->fetchAll();
     }
 
-    public static function addUser(array $user): void
+    public  function addUser(array $user): void
     {
-        self::$pdo->prepare(
+        $this->pdo->prepare(
             'insert into users values
                                     (:userName,:name,:email,:password,:admin,:blocked,null);'
         )->execute($user);
     }
 
-    public static function addMassage(array $massage)
+    public  function addMassage(array $massage)
     {
-        self::$pdo->prepare(
+        $this->pdo->prepare(
             'insert into massages values
                                     (:id,:text,:Image,:sender,:time);'
         )->execute($massage);
     }
 
-    public static function makeAdmin(){
-        //todo}
+    public static function getInstance(): DataSaverInterface
+    {
+        if (self::$instance == null){
+            self::$instance = new DatabaseManager();
+        }
+        return self::$instance;
     }
-
-    public static function blockToggle()
+    public  function deleteMassage()
     {
         //todo
     }
 
-    public static function deleteMassage()
+    public function addProfilePic(array $pic)
     {
-        //todo
+        // TODO: Implement addProfilePic() method.
     }
 
+    public function addImage(array $image)
+    {
+        // TODO: Implement addImage() method.
+    }
+
+    public function deleteImage(array $image)
+    {
+        // TODO: Implement deleteImage() method.
+    }
+
+    public function getImagesOfUser(string $userName)
+    {
+        // TODO: Implement getImagesOfUser() method.
+    }
+
+    public function isAdmin(string $userName)
+    {
+        // TODO: Implement isAdmin() method.
+    }
+
+    public function isBlocked(string $userName)
+    {
+        // TODO: Implement isBlocked() method.
+    }
+
+    public function makeAdmin(string $userName)
+    {
+        // TODO: Implement makeAdmin() method.
+    }
+
+    public function blockToggle(string $userName)
+    {
+        // TODO: Implement blockToggle() method.
+    }
 }

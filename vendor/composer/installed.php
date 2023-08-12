@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'amir/chatsql',
         'pretty_version' => 'dev-database',
         'version' => 'dev-database',
-        'reference' => '5e2cd0ebc550272d52bca2026ca3ee30fb05d2f1',
+        'reference' => '8731567921e0dfef149754eb089c16e5e89a35fb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'amir/chatsql' => array(
             'pretty_version' => 'dev-database',
             'version' => 'dev-database',
-            'reference' => '5e2cd0ebc550272d52bca2026ca3ee30fb05d2f1',
+            'reference' => '8731567921e0dfef149754eb089c16e5e89a35fb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

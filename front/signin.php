@@ -1,5 +1,6 @@
 <?php
 include_once "../back/validation.php";
+include_once "../vendor/autoload.php";
 
 if (isset($_POST['Login'])) {
     $user = [

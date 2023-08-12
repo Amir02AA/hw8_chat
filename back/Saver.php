@@ -1,58 +1,26 @@
 <?php
+include_once "../vendor/autoload.php";
 
-class JsonManager implements DataSaverInterface
+class Saver implements DataSaverInterface
 {
-    private static DataSaverInterface|null $instance = null;
-    private  array $jsonUsersArray = [];
-    private  array $jsonMassagesArray = [];
-    private  function __construct()
+    private static Saver|null $instance = null;
+    private DataSaverInterface $saver;
+
+    public function __construct()
     {
-       $this->createJson();
+        $this->saver = (strtolower(Method::getMethod()) == "sql") ? DatabaseManager::getInstance() : JsonManager::getInstance();
     }
 
-    private function createJson()
+    public function setMethod(DataSaverInterface $dataSaver)
     {
-        if (is_file('../front/userData.json')) {
-            $this->jsonUsersArray= json_decode(file_get_contents('../front/userData.json'), true);
-        }else file_put_contents('../front/userData.json',[]);
-
-        if (is_file('../front/msg.json')) {
-            $this->jsonMassagesArray = json_decode(file_get_contents('../front/msg.json'), true);
-        }else file_put_contents('../front/msg.json',[]);
+        $this->saver = $dataSaver;
     }
 
-    /**
-     * @return array
-     */
-    public  function getJsonMassagesArray(): array
-    {
-        $this->createJson();
-        return $this->jsonMassagesArray;
-    }
-
-    /**
-     * @return array
-     */
-    public  function getJsonUsersArray(): array
-    {
-        $this->createJson();
-        return $this->jsonUsersArray;
-    }
-
-    public  function saveUsers(array $users):void
-    {
-        file_put_contents('../front/userData.json',$users);
-    }
-
-    public  function saveMassages(array $msgs):void
-    {
-        file_put_contents('../front/msg.json',$msgs);
-    }
 
     public static function getInstance(): DataSaverInterface
     {
-        if (self::$instance == null){
-            self::$instance = new JsonManager();
+        if (self::$instance == null) {
+            self::$instance = new Saver();
         }
         return self::$instance;
     }

@@ -2,6 +2,8 @@
 session_start();
 include_once '../back/validation.php';
 include_once '../back/DatabaseManager.php';
+include_once "../vendor/autoload.php";
+
 
 $usersArray = [];
 
