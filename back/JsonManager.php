@@ -3,8 +3,8 @@
 class JsonManager implements DataSaverInterface
 {
     private static DataSaverInterface|null $instance = null;
-    private  array $jsonUsersArray = [];
-    private  array $jsonMassagesArray = [];
+    private array $jsonUsersArray = [];
+    private array $jsonMassagesArray = [];
     private  function __construct()
     {
        $this->createJson();

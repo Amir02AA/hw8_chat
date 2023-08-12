@@ -27,66 +27,66 @@ class Saver implements DataSaverInterface
 
     public function getUsers()
     {
-        // TODO: Implement getUsers() method.
+       return $this->saver->getUsers();
     }
 
     public function getMassages()
     {
-        // TODO: Implement getMassages() method.
+        return $this->saver->getMassages();
     }
 
     public function addMassage(array $massage)
     {
-        // TODO: Implement addMassage() method.
+        $this->saver->addMassage($massage);
     }
 
     public function addUser(array $user)
     {
-        // TODO: Implement addUser() method.
+        $this->saver->addUser($user);
     }
 
     public function addProfilePic(array $pic)
     {
-        // TODO: Implement addProfilePic() method.
+        $this->saver->addProfilePic($pic);
     }
 
     public function deleteMassage()
     {
-        // TODO: Implement deleteMassage() method.
+        $this->saver->deleteMassage();
     }
 
     public function addImage(array $image)
     {
-        // TODO: Implement addImage() method.
+        $this->saver->addImage($image);
     }
 
     public function deleteImage(array $image)
     {
-        // TODO: Implement deleteImage() method.
+        $this->saver->deleteImage($image);
     }
 
     public function getImagesOfUser(string $userName)
     {
-        // TODO: Implement getImagesOfUser() method.
+       return $this->saver->getImagesOfUser($userName);
     }
 
     public function makeAdmin(string $userName)
     {
-        // TODO: Implement makeAdmin() method.
+        $this->saver->makeAdmin($userName);
     }
 
     public function isAdmin(string $userName)
     {
-        // TODO: Implement isAdmin() method.
+        return $this->saver->isAdmin();
     }
 
     public function isBlocked(string $userName)
     {
-        // TODO: Implement isBlocked() method.
+        return $this->saver->isBlocked();
     }
 
     public function blockToggle(string $userName)
     {
-        // TODO: Implement blockToggle() method.
+        $this->saver->blockToggle($userName);
     }
 }
