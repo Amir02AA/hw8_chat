@@ -1,8 +1,8 @@
 <?php
-$jsonArray = [];
+$usersArray = [];
 
 if (is_file('userData.json')) {
-    $jsonArray = json_decode(file_get_contents('userData.json'), true);
+    $usersArray = json_decode(file_get_contents('userData.json'), true);
 }
 
 function checkSignUpErrors(array $user): array|false

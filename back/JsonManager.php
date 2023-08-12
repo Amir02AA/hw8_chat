@@ -1,6 +1,6 @@
 <?php
 
-class JsonManager
+class JsonManager implements DataSaverInterface
 {
     private static array $jsonUsersArray = [];
     private static array $jsonMassagesArray = [];

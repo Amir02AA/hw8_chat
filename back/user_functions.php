@@ -9,6 +9,11 @@ $userData = [];
 if (is_file('../front/userData.json')) {
     $jsonArray = json_decode(file_get_contents('../front/userData.json'), true);
 }
+if (false){
+    //todo
+    $jsonArray = DatabaseManager::getUsers();
+    $msgArray  = DatabaseManager::getMassages();
+}
 
 if (is_file('../front/msg.json')) {
     $msgArray = json_decode(file_get_contents('../front/msg.json'), true);
@@ -83,7 +88,10 @@ function addMsg($text, $imageName = false): void
         "sender" => $userData['userName'],
         "time" => time()
     ];
-
+    if (false){
+        //todo
+        DatabaseManager::addMassage($massage);
+    }
     $msgArray[] = $massage;
     saveChangesMsg();
 }

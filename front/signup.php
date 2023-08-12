@@ -1,11 +1,17 @@
 <?php
 session_start();
 include_once '../back/validation.php';
+include_once '../back/DatabaseManager.php';
 
 $usersArray = [];
 
 if (is_file('userData.json')) {
     $usersArray = json_decode(file_get_contents('userData.json'), true);
+}
+
+if(false){
+    //todo
+    $usersArray = DatabaseManager::getUsers();
 }
 
 if (isset($_POST['submit'])) {
@@ -23,6 +29,10 @@ if (isset($_POST['submit'])) {
 
     if (!$errors) {
         $usersArray[] = $user;
+        if (false){
+            //todo
+            DatabaseManager::addUser($user);
+        }
         file_put_contents('userData.json', json_encode($usersArray, JSON_PRETTY_PRINT));
     } else {
         $htmlErrors = "";
