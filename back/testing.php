@@ -1,10 +1,15 @@
 <?php
+
+use back\Saver;
+
 include_once "DataSaverInterface.php";
 include_once "SQLManager.php";
 include_once "Saver.php";
 include_once "Method.php";
 include_once "JsonManager.php";
 
+session_start();
+$_SESSION['userName'] = 'aa02';
 //$db = SQLManager::getInstance();
 $db = Saver::getSaverObject();
 $user = [
@@ -29,8 +34,8 @@ $massage = [
 //$db->addProfilePic($image);
 //$db->addUser($user);
 //$db->addMassage($massage);
-$db->blockToggle('aa02');
+//$db->blockToggle('aa02');
 echo "<pre>";
 //print_r($db->getImagesOfUser('aa04'));
-print_r($db->isAdmin());
+var_dump($db->isAdmin());
 echo "<pre>";

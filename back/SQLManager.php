@@ -150,7 +150,7 @@ class SQLManager implements DataSaverInterface
         $st = $this->pdo->prepare("select isAdmin from users
                                         where userName = :userName");
         $st->execute(['userName' => $userName]);
-        return $st->fetch();
+        return $st->fetch()['isAdmin'];
     }
 
     public function isBlocked(string $userName = '')

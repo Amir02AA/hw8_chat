@@ -1,22 +1,40 @@
 <?php
 include_once "../vendor/autoload.php";
+include_once "autoloader.php";
+include_once "../back/user_functions.php";
+
 if (!session_id()) session_start();
+$saver = \back\Saver::getSaverObject();
 if (isset($_POST['submit'])) {
     if (@$_FILES['pic']['name'] != "" && strlen($_POST['msg']) <= 100) {
-        if (!imageErrorCheck($_FILES['pic']['name'], $_FILES['pic']['size'])) {
-            addMsg($_POST['msg'], $_FILES['pic']['name']);
+        if (!\back\imageErrorCheck($_FILES['pic']['name'], $_FILES['pic']['size'])) {
+            $msg = [
+                'id' => uniqid(),
+                'text' => $_POST['msg'],
+                'Image' => $_FILES['pic']['name'],
+                'sender' => @$_SESSION['userName'],
+                'time'=>time()
+            ];
+            $saver->addMassage($msg);
             if (!is_dir("../UsersData/msg Images/")) mkdir("../UsersData/msg Images/");
             move_uploaded_file($_FILES['pic']['tmp_name'], "../UsersData/msg Images/" . $_FILES['pic']['name']);
         } else {
-            $error = imageErrorCheck($_FILES['pic']['name'], $_FILES['pic']['size']);
+            $error = \back\imageErrorCheck($_FILES['pic']['name'], $_FILES['pic']['size']);
             $error = "<label class='text-red-800'>$error</label>";
         }
     } elseif (strlen($_POST['msg']) <= 100) {
-        addMsg($_POST['msg']);
+        $msg = [
+            'id' => uniqid(),
+            'text' => $_POST['msg'],
+            'Image' => '',
+            'sender' => @$_SESSION['userName'],
+            'time'=>time()
+        ];
+        $saver->addMassage($msg);
     }
 }
-if (isset($_POST['delete']) && isAdmin()) {
-    deleteMsg($_POST['delete']);
+if (isset($_POST['delete']) && $saver->isAdmin()) {
+    $saver->deleteMassage($_POST['delete']);
 }
 ?>
 <!doctype html>
@@ -46,7 +64,7 @@ if (isset($_POST['delete']) && isAdmin()) {
 <main class="flex flex-col pt-24 min-h-screen bg-gray-600 pb-2">
     <section class="flex flex-col gap-3 bg-gray-600 px-6 py-3 flex-1">
         <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-w-2">
-            <?php foreach (getMsg() as $item => $massage) {
+            <?php foreach ($saver->getMassages() as $item => $massage) {
                 if ($massage['sender'] == @$_SESSION['userName']) {
                     ?>
                     <div class="chat-message myMSG">
@@ -67,9 +85,9 @@ if (isset($_POST['delete']) && isAdmin()) {
                                 </div>
                             </div>
                             <img
-                                src="<?= getProfByUser($massage['sender']) ?>"
+                                src="<?= $saver->getImagesOfUser($massage['sender']) ?>"
                                 alt="My profile" class="w-14 h-14 rounded-full order-2">
-                            <?php if (isAdmin()) { ?>
+                            <?php if ($saver->isAdmin()) { ?>
                                 <form method="post">
                                     <button type="submit" name="delete" value="<?= $massage['id'] ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
@@ -105,9 +123,9 @@ if (isset($_POST['delete']) && isAdmin()) {
                                 </div>
                             </div>
                             <img
-                                src="<?= getProfByUser($massage['sender']) ?>"
+                                src="<?= $saver->getImagesOfUser($massage['sender']) ?>"
                                 alt="My profile" class="w-14 h-14 rounded-full order-1">
-                            <?php if (isAdmin()) { ?>
+                            <?php if ($saver->isAdmin()) { ?>
                                 <form method="post">
                                     <button type="submit" name="delete" value="<?= $massage['id'] ?>">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red"
@@ -127,7 +145,7 @@ if (isset($_POST['delete']) && isAdmin()) {
             <?php } ?>
         </div>
     </section>
-    <section class="<?= (isBlocked(getUserData()['userName'])) ? "hidden" : "" ?>">
+    <section class="<?= ($saver->isBlocked(@$_SESSION['userName'])) ? "hidden" : "" ?>">
         <div class="bg-gray-600 px-4 pt-4 mb-2 sm:mb-0">
             <span id="msgSpan" class="text-green-700 bg-gray-200 py-2 px-2 rounded font-bold">100
             </span>
