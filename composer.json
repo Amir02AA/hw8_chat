@@ -2,10 +2,11 @@
     "name": "amir/chatsql",
     "autoload": {
         "psr-4": {
-            "": "*/"
+            "back\\": "/back/"
         }
     },
     "require": {
-        "symfony/yaml": "^6.3"
+        "symfony/yaml": "^6.3",
+      "ext-pdo": "*"
     }
 }

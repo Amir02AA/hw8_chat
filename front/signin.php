@@ -1,18 +1,20 @@
 <?php
-include_once "../vendor/autoload.php";
+//include_once "../vendor/autoload.php";
+include_once "autoloader.php";
+include_once "../back/validation.php";
 
 if (isset($_POST['Login'])) {
     $user = [
-        'userName' =>$_POST["username-log"],
-        'password'=>$_POST["password-log"],
+        'userName' => $_POST["username-log"],
+        'password' => $_POST["password-log"],
     ];
-    $error =checkLoginErrors($user);
-    if (!$error){
+    $error = \back\checkLoginErrors($user);
+    if (!$error) {
         session_start();
         $_SESSION['userName'] = $_POST['username-log'];
         header('location:mainPage.php');
         die();
-    }else $htmlError = "<label class='text-danger'>$error</label>";
+    } else $htmlError = "<label class='text-danger'>$error</label>";
 
 }
 ?>

@@ -1,4 +1,7 @@
 <?php
+namespace back;
+
+use PDO;
 
 class SQLManager implements DataSaverInterface
 {
@@ -122,8 +125,12 @@ class SQLManager implements DataSaverInterface
                                     (:userName,:pic,:index)")->execute($pic);
     }
 
-    public function deleteImage(array $image): void
+    public function deleteImage(int $index): void
     {
+        $image = [
+            'userName' =>  @$_SESSION['userName'],
+            'index' => $index
+        ];
         $this->pdo->prepare("delete from pics where
                                     user = :userName and 
                                     pic_index = :index")->execute($image);
@@ -146,9 +153,9 @@ class SQLManager implements DataSaverInterface
         return $st->fetch();
     }
 
-    public function isBlocked()
+    public function isBlocked(string $userName = '')
     {
-        $userName =  @$_SESSION['userName'];
+        $userName =  ($userName == '')? @$_SESSION['userName'] : $userName;
         $st = $this->pdo->prepare("select blocked from users
                                             where userName = :userName");
         $st->execute(['userName' => $userName]);

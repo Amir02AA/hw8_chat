@@ -1,9 +1,13 @@
 <?php
 include_once "../vendor/autoload.php";
-$users = getUsersArray();
+include_once "autoloader.php";
 if (!session_id()) session_start();
+
+$saver = \back\Saver::getSaverObject();
+$users = $saver->getUsers();
+
 if (isset($_POST['blockToggle'])) {
-    blockToggle($_POST['blockToggle']);
+    $saver->blockToggle($_POST['blockToggle']);
 }
 ?>
 <!doctype html>
@@ -18,13 +22,13 @@ if (isset($_POST['blockToggle'])) {
 </head>
 <body class="bg-gray-600 flex flex-col gap-3 px-5 py-20 justify-center items-center">
 <?php foreach ($users as $user) {
-if ($user['userName'] != getUserData()['userName']) {
+if ($user['userName'] != @$_SESSION['userName']) {
     ?>
     <form class="flex gap2 justify-center items-center w-1/4" method="post">
         <div class="w-full">
             <button type="submit" name="blockToggle"
                     class="font-bold w-full rounded-lg px-2 py-4 text-black hover:bg-opacity-50
-                        <?= (isBlocked($user['userName'])) ? "bg-red-400" : "bg-green-400" ?>"
+                        <?= ($saver->isBlocked($user['userName'])) ? "bg-red-400" : "bg-green-400" ?>"
                     value="<?= $user['userName'] ?>">
                 <?= $user['userName'] ?>
             </button>

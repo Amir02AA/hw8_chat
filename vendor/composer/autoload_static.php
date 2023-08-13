@@ -12,6 +12,10 @@ class ComposerStaticInitc712e8139522772c8707ef3224e44342
     );
 
     public static $prefixLengthsPsr4 = array (
+        'b' => 
+        array (
+            'back\\' => 5,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Ctype\\' => 23,
@@ -20,6 +24,10 @@ class ComposerStaticInitc712e8139522772c8707ef3224e44342
     );
 
     public static $prefixDirsPsr4 = array (
+        'back\\' => 
+        array (
+            0 => '/back',
+        ),
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
@@ -28,10 +36,6 @@ class ComposerStaticInitc712e8139522772c8707ef3224e44342
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-    );
-
-    public static $fallbackDirsPsr4 = array (
-        0 => __DIR__ . '/../..' . '/*',
     );
 
     public static $classMap = array (
@@ -43,7 +47,6 @@ class ComposerStaticInitc712e8139522772c8707ef3224e44342
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitc712e8139522772c8707ef3224e44342::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitc712e8139522772c8707ef3224e44342::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInitc712e8139522772c8707ef3224e44342::$fallbackDirsPsr4;
             $loader->classMap = ComposerStaticInitc712e8139522772c8707ef3224e44342::$classMap;
 
         }, null, ClassLoader::class);

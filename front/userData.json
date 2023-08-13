@@ -16,7 +16,7 @@
         "email": "arssrad8@gmail.com",
         "password": "112233",
         "admin": false,
-        "blocked": true,
+        "blocked": false,
         "images": [
             "..\/UsersData\/Ali\/profile_pics\/1218437.jpg",
             "..\/UsersData\/Ali\/profile_pics\/2297894.jpg"
@@ -39,6 +39,14 @@
         "email": "aa02@mail",
         "password": "123456",
         "admin": 0,
-        "blocked": 0
+        "blocked": false
+    },
+    {
+        "userName": "asdfaf",
+        "name": "asdgsf",
+        "email": "asdfad@sdff",
+        "password": "adgadfs",
+        "admin": false,
+        "blocked": false
     }
 ]

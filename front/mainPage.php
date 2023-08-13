@@ -1,7 +1,10 @@
 <?php
 include_once "../vendor/autoload.php";
+include_once "autoloader.php";
 
 if (!session_id()) session_start();
+
+$saver = \back\Saver::getSaverObject();
 $userName = @$_SESSION['userName'];
 if (!is_dir("../UsersData/" . $userName . "/")) {
     mkdir("../UsersData/" . $userName . "/");
@@ -14,8 +17,14 @@ if (isset($_POST['submit'])) {
         $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
         if (in_array($ext, $imageTypes)) {
             $imagePath = "../UsersData/" . $userName . "/" . "profile_pics/" . $_FILES['file']['name'];
-            addImage($imagePath);
             move_uploaded_file($_FILES['file']['tmp_name'], "../UsersData/" . $userName . "/" . "profile_pics/" . $_FILES['file']['name']);
+
+            $image = [
+              'userName' => $userName,
+              'pic' => $imagePath
+            ];
+            $saver->addProfilePic($image);
+
         }
         else{
             $error = "<label class='text-red-400'>Wrong Format</label>";
@@ -29,20 +38,20 @@ if (isset($_POST['sBio'])) {
 }
 $imagesCount = 0;
 if (isset($_POST['delete']) && $_GET['page'] != -1) {
-    deleteImage($_GET['page']);
+    $saver->deleteImage($_GET['page']);
     header("location:mainPage.php");
 }
 
-if (getImages()) {
-    $imagesCount = sizeof(getImages());
+if ($saver->getImagesOfUser()) {
+    $imagesCount = sizeof($saver->getImagesOfUser());
     if (!isset($_GET['page'])) {
         $_GET['page'] = 0;
         header("location:mainPage.php?page=0");
     }
 } elseif (!isset($_GET['page'])) $_GET['page'] = -1;
 
-if (isset($_POST['admin'])) makeAdmin();
-if (isset($_POST['block']) && isAdmin()){
+if (isset($_POST['admin'])) $saver->makeAdmin();
+if (isset($_POST['block']) && $saver->isAdmin()){
     header("location:admin.php");
 }
 ?>
@@ -60,7 +69,7 @@ if (isset($_POST['block']) && isAdmin()){
 <div class="flex flex-row items-center justify-center">
     <div class="flex flex-col items-center justify-between px-4 py-3 sm:px-6 w-1/6 gap-3">
         <div class="profile">
-            <?php $currentImage = (($_GET['page'] != -1) ? getImages()[$_GET['page']] : "../UsersData/diffProf.jpg");
+            <?php $currentImage = (($_GET['page'] != -1) ? $saver->getImagesOfUser()[$_GET['page']] : "../UsersData/diffProf.jpg");
             ?>
             <img src="<?= $currentImage ?>" alt="prof" class="rounded-full prof">
         </div>
@@ -68,8 +77,8 @@ if (isset($_POST['block']) && isAdmin()){
             <div>
                 <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
                     <?php
-                    if (getImages()) {
-                        foreach (getImages() as $index => $Image) { ?>
+                    if ($saver->getImagesOfUser()) {
+                        foreach ($saver->getImagesOfUser() as $index => $Image) { ?>
                             <a href="?page=<?= $index ?>" aria-current="page"
                                class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold
                        text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 rounded-lg
@@ -94,7 +103,7 @@ if (isset($_POST['block']) && isAdmin()){
         <textarea name="bio" id="bio" rows="4" cols="25"></textarea>
         <div class="flex gap-3">
             <button type="submit" name="sBio" class="bg-blue-700 text-white rounded-lg hover: px-3 py-1 text-center">Change Bio</button>
-            <?php if (!isAdmin()){?>
+            <?php if (!$saver->isAdmin()){?>
             <button type="submit" name="admin" class="bg-blue-700 text-white rounded-lg hover: px-3 py-1 text-center">Make Admin</button>
             <?php }else{ ?>
             <button type="submit" name="block" class="bg-red-500 text-white rounded-lg hover: px-3 py-1 text-center">Block Users</button>

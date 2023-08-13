@@ -1,18 +1,9 @@
 <?php
 session_start();
-include_once "../vendor/autoload.php";
-
-
-$usersArray = [];
-
-if (is_file('userData.json')) {
-    $usersArray = json_decode(file_get_contents('userData.json'), true);
-}
-
-if(false){
-    //todo
-    $usersArray = SQLManager::getUsers();
-}
+include_once "autoloader.php";
+include_once "../back/validation.php";
+$saver = \back\Saver::getSaverObject();
+$usersArray = $saver->getUsers();
 
 if (isset($_POST['submit'])) {
 
@@ -25,15 +16,10 @@ if (isset($_POST['submit'])) {
         'blocked'=>false
     ];
 
-    $errors = checkSignUpErrors($user);
+    $errors = \back\checkSignUpErrors($user);
 
     if (!$errors) {
-        $usersArray[] = $user;
-        if (false){
-            //todo
-            SQLManager::addUser($user);
-        }
-        file_put_contents('userData.json', json_encode($usersArray, JSON_PRETTY_PRINT));
+        $saver->addUser($user);
     } else {
         $htmlErrors = "";
         foreach ($errors as $error) {
@@ -45,15 +31,16 @@ if (isset($_POST['submit'])) {
     }
 }
 
-if (isset($_POST['Login'])) {
-    if ($_POST['username-log'] != "" && $_POST['password-log'] != "") {
-        if (login($_POST['username-log'], $_POST['password-log'])) {
-            $_SESSION['user'] = [$_POST['username-log'], $_POST['password-log']];
-            header('location:mainPage.php');
-            die();
-        }
-    }
-}
+//if (isset($_POST['Login'])) {
+//    if ($_POST['username-log'] != "" && $_POST['password-log'] != "") {
+//        if (login($_POST['username-log'], $_POST['password-log'])) {
+////            $_SESSION['user'] = [$_POST['username-log'], $_POST['password-log']];
+//            $_SESSION['userName'] = $_POST['username-log'];
+//            header('location:mainPage.php');
+//            die();
+//        }
+//    }
+//}
 ?>
 <!doctype html>
 <html lang="en">

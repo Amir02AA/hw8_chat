@@ -1,5 +1,5 @@
 <?php
-
+namespace back;
 interface DataSaverInterface
 {
 
@@ -15,7 +15,7 @@ interface DataSaverInterface
     public  function deleteMassage(string $id);
 
 
-    public  function deleteImage(array $image);
+    public  function deleteImage(int $index);
 
     public  function getImagesOfUser(string $userName);
 
@@ -23,7 +23,7 @@ interface DataSaverInterface
 
     public  function isAdmin();
 
-    public  function isBlocked();
+    public  function isBlocked(string $userName='');
 
     public  function blockToggle(string $userName);
 }

@@ -1,4 +1,6 @@
 <?php
+namespace back;
+
 if (!session_id()) session_start();
 $userName = @$_SESSION['userName'];
 

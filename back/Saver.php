@@ -1,4 +1,6 @@
 <?php
+namespace back;
+
 include_once "../vendor/autoload.php";
 
 final class Saver

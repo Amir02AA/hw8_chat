@@ -1,13 +1,13 @@
 <?php
+namespace back;
+
 $usersArray = [];
 
-if (is_file('../back/userData.json')) {
-    $usersArray = json_decode(file_get_contents('../back/userData.json'), true);
-}
+$usersArray = Saver::getSaverObject()->getUsers();
 
 
 function checkSignUpErrors(array $user): array|false
-{ 
+{
     $errors = [];
 
 
@@ -30,7 +30,7 @@ function checkSignUpErrors(array $user): array|false
 function checkLoginErrors(array $user)
 {
     global $usersArray;
-    if ($user['userName']=="" || $user['password']==""){
+    if ($user['userName'] == "" || $user['password'] == "") {
         return "Please Enter your User Name AND Password";
     }
     foreach ($usersArray as $userData) {

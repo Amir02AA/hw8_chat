@@ -3,7 +3,7 @@
         'name' => 'amir/chatsql',
         'pretty_version' => 'dev-database',
         'version' => 'dev-database',
-        'reference' => '8731567921e0dfef149754eb089c16e5e89a35fb',
+        'reference' => 'c69531dbd092318828a79ca752ca2915230ff6fb',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'amir/chatsql' => array(
             'pretty_version' => 'dev-database',
             'version' => 'dev-database',
-            'reference' => '8731567921e0dfef149754eb089c16e5e89a35fb',
+            'reference' => 'c69531dbd092318828a79ca752ca2915230ff6fb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

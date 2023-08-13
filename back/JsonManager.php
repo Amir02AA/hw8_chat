@@ -1,4 +1,5 @@
 <?php
+namespace back;
 
 class JsonManager implements DataSaverInterface
 {
@@ -25,7 +26,7 @@ class JsonManager implements DataSaverInterface
         $this->getUserData();
     }
 
-    private function getUserData()
+    private function getUserData():void
     {
         $userName =  @$_SESSION['userName'];
         foreach ($this->jsonUsersArray as $item) {
@@ -112,9 +113,8 @@ class JsonManager implements DataSaverInterface
     }
 
 
-    public function deleteImage(array $image)
+    public function deleteImage(int $id)
     {
-        $id = $image['pic_index'];
         unlink($this->userData['images'][$id]);
         unset($this->userData['images'][$id]);
         $this->userData['images'] = array_values($this->userData['images']);
@@ -143,9 +143,15 @@ class JsonManager implements DataSaverInterface
         return $this->userData['admin'];
     }
 
-    public function isBlocked()
+    public function isBlocked(string $userName=''):bool
     {
-        return $this->userData['blocked'];
+        $userName =  ($userName == '')? $this->userData['userName'] : $userName;
+
+        foreach ($this->jsonUsersArray as $key => $item) {
+            if ($item['userName'] == $userName) {
+                return $item['blocked'];
+            }
+        }
     }
 
     public function blockToggle(string $userName)
@@ -153,7 +159,7 @@ class JsonManager implements DataSaverInterface
         foreach ($this->jsonUsersArray as $key => $item) {
             if ($item['userName'] == $userName) {
                 $this->jsonUsersArray[$key]['blocked'] = !$this->jsonUsersArray[$key]['blocked'];
-                $this->updateUserData();
+                $this->saveUsers();
                 break;
             }
         }
