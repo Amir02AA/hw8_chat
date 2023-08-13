@@ -129,31 +129,35 @@ class SQLManager implements DataSaverInterface
                                     pic_index = :index")->execute($image);
     }
 
-    public function getImagesOfUser(string $userName)
+    public function getImagesOfUser(string $userName='')
     {
+        $userName = ($userName == '')?  @$_SESSION['userName'] : $userName;
         $state = $this->pdo->prepare("select pic from pics where user = :user");
         $state->execute(['user' => $userName]);
         return $state->fetchAll();
     }
 
-    public function isAdmin(string $userName)
+    public function isAdmin()
     {
+        $userName =  @$_SESSION['userName'];
         $st = $this->pdo->prepare("select isAdmin from users
                                         where userName = :userName");
         $st->execute(['userName' => $userName]);
         return $st->fetch();
     }
 
-    public function isBlocked(string $userName)
+    public function isBlocked()
     {
+        $userName =  @$_SESSION['userName'];
         $st = $this->pdo->prepare("select blocked from users
                                             where userName = :userName");
         $st->execute(['userName' => $userName]);
         return $st->fetch()['blocked'];
     }
 
-    public function makeAdmin(string $userName)
+    public function makeAdmin()
     {
+        $userName =  @$_SESSION['userName'];
         $this->pdo->prepare("update users set
                                     isAdmin = 1
                                     where userName = :userName")

@@ -27,10 +27,10 @@ $massage = [
     'time'=>time()
 ];
 //$db->addProfilePic($image);
-$db->addUser($user);
-$db->addMassage($massage);
+//$db->addUser($user);
+//$db->addMassage($massage);
+$db->blockToggle('aa02');
 echo "<pre>";
 //print_r($db->getImagesOfUser('aa04'));
-print_r($db->getUsers());
-print_r($db->getMassages());
+print_r($db->isAdmin());
 echo "<pre>";

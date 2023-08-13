@@ -19,11 +19,11 @@ interface DataSaverInterface
 
     public  function getImagesOfUser(string $userName);
 
-    public  function makeAdmin(string $userName);
+    public  function makeAdmin();
 
-    public  function isAdmin(string $userName);
+    public  function isAdmin();
 
-    public  function isBlocked(string $userName);
+    public  function isBlocked();
 
     public  function blockToggle(string $userName);
 }

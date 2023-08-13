@@ -1,5 +1,6 @@
 <?php
-include_once "../back/user_functions.php";
+include_once "../vendor/autoload.php";
+
 if (!session_id()) session_start();
 $userName = @$_SESSION['userName'];
 if (!is_dir("../UsersData/" . $userName . "/")) {

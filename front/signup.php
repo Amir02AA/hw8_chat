@@ -1,7 +1,5 @@
 <?php
 session_start();
-include_once '../back/validation.php';
-include_once '../back/SQLManager.php';
 include_once "../vendor/autoload.php";
 
 

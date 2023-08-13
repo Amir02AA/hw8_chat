@@ -123,21 +123,27 @@ class JsonManager implements DataSaverInterface
 
     public function getImagesOfUser(string $userName='')
     {
-        return (isset($this->userData['images'])) ? $this->userData['images'] : false;
+        $userName = ($userName == '')? $this->userData['userName'] : $userName;
+        foreach ($this->jsonUsersArray as $key =>$val){
+            if ($val['userName'] == $userName){
+                return $val['images'];
+            }
+        }
     }
 
-    public function makeAdmin(string $userName='')
+    public function makeAdmin()
+
     {
         $this->userData['admin'] = true;
         $this->updateUserData();
     }
 
-    public function isAdmin(string $userName='')
+    public function isAdmin()
     {
         return $this->userData['admin'];
     }
 
-    public function isBlocked(string $userName='')
+    public function isBlocked()
     {
         return $this->userData['blocked'];
     }

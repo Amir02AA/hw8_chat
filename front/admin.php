@@ -1,5 +1,5 @@
 <?php
-include_once "../back/user_functions.php";
+include_once "../vendor/autoload.php";
 $users = getUsersArray();
 if (!session_id()) session_start();
 if (isset($_POST['blockToggle'])) {
