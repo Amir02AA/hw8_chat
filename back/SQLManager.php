@@ -99,7 +99,7 @@ class SQLManager implements DataSaverInterface
     {
         $this->pdo->prepare(
             'insert into massages values
-                                    (:id,:text,:Image,:sender,:time);'
+                                    (:id,:text,:Image,:time,:sender);'
         )->execute($massage);
     }
 
@@ -112,13 +112,11 @@ class SQLManager implements DataSaverInterface
 
     public function addProfilePic(array $pic): void
     {
-//        try {
-            $st = $this->pdo->prepare("SELECT MAX(pic_index) from pics WHERE user = :userName;");
-            $st->execute(['userName' => $pic['userName']]);
-            $index = $st->fetch()['MAX(pic_index)'];
-//        }catch (Exception $e){
-//            $index = 0;
-//        }
+
+        $st = $this->pdo->prepare("SELECT MAX(pic_index) from pics WHERE user = :userName;");
+        $st->execute(['userName' => $pic['userName']]);
+        $index = $st->fetch()['MAX(pic_index)'];
+
         $pic['index'] =$index + 1;
         $this->pdo->prepare("insert into pics values 
                                     (:userName,:pic,:index)")->execute($pic);

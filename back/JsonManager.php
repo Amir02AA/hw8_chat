@@ -5,53 +5,78 @@ class JsonManager implements DataSaverInterface
     private static DataSaverInterface|null $instance = null;
     private array $jsonUsersArray = [];
     private array $jsonMassagesArray = [];
-    private  function __construct()
+    private array $userData = [];
+    private string $userName;
+    private function __construct()
     {
-       $this->createJson();
+        $this->jsonRefresh();
     }
 
-    private function createJson():void
+    private function jsonRefresh(): void
     {
         if (is_file('../front/userData.json')) {
-            $this->jsonUsersArray= json_decode(file_get_contents('../front/userData.json'), true);
-        }else file_put_contents('../front/userData.json',[]);
+            $this->jsonUsersArray = json_decode(file_get_contents('../front/userData.json'), true);
+        } else file_put_contents('../front/userData.json', []);
 
         if (is_file('../front/msg.json')) {
             $this->jsonMassagesArray = json_decode(file_get_contents('../front/msg.json'), true);
-        }else file_put_contents('../front/msg.json',[]);
+        } else file_put_contents('../front/msg.json', []);
+
+        $this->getUserData();
     }
 
+    private function getUserData()
+    {
+        $userName =  @$_SESSION['userName'];
+        foreach ($this->jsonUsersArray as $item) {
+            if ($item['userName'] == $userName) {
+                $this->userData = $item;
+                break;
+            }
+        }
+    }
+
+    private function updateUserData()
+    {
+        foreach ($this->jsonUsersArray as $key => $user) {
+            if ($this->userData['userName'] == $user['userName']) {
+                $this->jsonUsersArray[$key] = $this->userData;
+                $this->jsonRefresh();
+                break;
+            }
+        }
+    }
     /**
      * @return array
      */
-    public  function getMassages(): array
+    public function getMassages(): array
     {
-        $this->createJson();
+        $this->jsonRefresh();
         return $this->jsonMassagesArray;
     }
 
     /**
      * @return array
      */
-    public  function getUsers(): array
+    public function getUsers(): array
     {
-        $this->createJson();
+        $this->jsonRefresh();
         return $this->jsonUsersArray;
     }
 
-    public  function saveUsers(array $users):void
+    public function saveUsers(): void
     {
-        file_put_contents('../front/userData.json',$users);
+        file_put_contents('../front/userData.json', json_encode($this->jsonUsersArray,JSON_PRETTY_PRINT));
     }
 
-    public  function saveMassages(array $msgs):void
+    public function saveMassages(): void
     {
-        file_put_contents('../front/msg.json',$msgs);
+        file_put_contents('../front/msg.json', json_encode($this->jsonMassagesArray,JSON_PRETTY_PRINT));
     }
 
     public static function getInstance(): DataSaverInterface
     {
-        if (self::$instance == null){
+        if (self::$instance == null) {
             self::$instance = new JsonManager();
         }
         return self::$instance;
@@ -59,56 +84,72 @@ class JsonManager implements DataSaverInterface
 
     public function addMassage(array $massage)
     {
-        // TODO: Implement addMassage() method.
+        $this->jsonMassagesArray[] = $massage;
+        $this->saveMassages();
     }
 
     public function addUser(array $user)
     {
-        // TODO: Implement addUser() method.
+        $this->jsonUsersArray[] = $user;
+        $this->saveUsers();
     }
 
     public function addProfilePic(array $pic)
     {
-        // TODO: Implement addProfilePic() method.
+        $this->userData['images'][] = $pic['pic'];
+        $this->updateUserData();
     }
 
-    public function deleteMassage()
+    public function deleteMassage(string $id)
     {
-        // TODO: Implement deleteMassage() method.
+        foreach ($this->jsonMassagesArray as $key => $item) {
+            if ($item['id'] == $id){
+                unset($this->jsonMassagesArray[$key]);
+                $this->jsonRefresh();
+                break;
+            }
+        }
     }
 
-    public function addImage(array $image)
-    {
-        // TODO: Implement addImage() method.
-    }
 
     public function deleteImage(array $image)
     {
-        // TODO: Implement deleteImage() method.
+        $id = $image['pic_index'];
+        unlink($this->userData['images'][$id]);
+        unset($this->userData['images'][$id]);
+        $this->userData['images'] = array_values($this->userData['images']);
+        $this->updateUserData();
     }
 
-    public function getImagesOfUser(string $userName)
+    public function getImagesOfUser(string $userName='')
     {
-        // TODO: Implement getImagesOfUser() method.
+        return (isset($this->userData['images'])) ? $this->userData['images'] : false;
     }
 
-    public function makeAdmin(string $userName)
+    public function makeAdmin(string $userName='')
     {
-        // TODO: Implement makeAdmin() method.
+        $this->userData['admin'] = true;
+        $this->updateUserData();
     }
 
-    public function isAdmin(string $userName)
+    public function isAdmin(string $userName='')
     {
-        // TODO: Implement isAdmin() method.
+        return $this->userData['admin'];
     }
 
-    public function isBlocked(string $userName)
+    public function isBlocked(string $userName='')
     {
-        // TODO: Implement isBlocked() method.
+        return $this->userData['blocked'];
     }
 
     public function blockToggle(string $userName)
     {
-        // TODO: Implement blockToggle() method.
+        foreach ($this->jsonUsersArray as $key => $item) {
+            if ($item['userName'] == $userName) {
+                $this->jsonUsersArray[$key]['blocked'] = !$this->jsonUsersArray[$key]['blocked'];
+                $this->updateUserData();
+                break;
+            }
+        }
     }
 }
