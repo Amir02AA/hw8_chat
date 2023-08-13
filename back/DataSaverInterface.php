@@ -12,9 +12,8 @@ interface DataSaverInterface
 
     public  function addProfilePic(array $pic);
 
-    public  function deleteMassage();
+    public  function deleteMassage(string $id);
 
-    public  function addImage(array $image);
 
     public  function deleteImage(array $image);
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include_once '../back/validation.php';
-include_once '../back/DatabaseManager.php';
+include_once '../back/SQLManager.php';
 include_once "../vendor/autoload.php";
 
 
@@ -13,7 +13,7 @@ if (is_file('userData.json')) {
 
 if(false){
     //todo
-    $usersArray = DatabaseManager::getUsers();
+    $usersArray = SQLManager::getUsers();
 }
 
 if (isset($_POST['submit'])) {
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         $usersArray[] = $user;
         if (false){
             //todo
-            DatabaseManager::addUser($user);
+            SQLManager::addUser($user);
         }
         file_put_contents('userData.json', json_encode($usersArray, JSON_PRETTY_PRINT));
     } else {

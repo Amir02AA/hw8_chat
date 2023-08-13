@@ -10,7 +10,7 @@ class JsonManager implements DataSaverInterface
        $this->createJson();
     }
 
-    private function createJson()
+    private function createJson():void
     {
         if (is_file('../front/userData.json')) {
             $this->jsonUsersArray= json_decode(file_get_contents('../front/userData.json'), true);
@@ -24,7 +24,7 @@ class JsonManager implements DataSaverInterface
     /**
      * @return array
      */
-    public  function getJsonMassagesArray(): array
+    public  function getMassages(): array
     {
         $this->createJson();
         return $this->jsonMassagesArray;
@@ -33,7 +33,7 @@ class JsonManager implements DataSaverInterface
     /**
      * @return array
      */
-    public  function getJsonUsersArray(): array
+    public  function getUsers(): array
     {
         $this->createJson();
         return $this->jsonUsersArray;
@@ -55,16 +55,6 @@ class JsonManager implements DataSaverInterface
             self::$instance = new JsonManager();
         }
         return self::$instance;
-    }
-
-    public function getUsers()
-    {
-        // TODO: Implement getUsers() method.
-    }
-
-    public function getMassages()
-    {
-        // TODO: Implement getMassages() method.
     }
 
     public function addMassage(array $massage)

@@ -11,8 +11,8 @@ if (is_file('../front/userData.json')) {
 }
 if (false){
     //todo
-    $jsonArray = DatabaseManager::getUsers();
-    $msgArray  = DatabaseManager::getMassages();
+    $jsonArray = SQLManager::getUsers();
+    $msgArray  = SQLManager::getMassages();
 }
 
 if (is_file('../front/msg.json')) {
@@ -90,7 +90,7 @@ function addMsg($text, $imageName = false): void
     ];
     if (false){
         //todo
-        DatabaseManager::addMassage($massage);
+        SQLManager::addMassage($massage);
     }
     $msgArray[] = $massage;
     saveChangesMsg();
