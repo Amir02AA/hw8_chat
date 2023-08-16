@@ -2,7 +2,9 @@
 include_once "../vendor/autoload.php";
 include_once "autoloader.php";
 include_once "../back/user_functions.php";
-
+//echo "<pre>";
+//var_dump(@$_SESSION);
+//echo "<pre>";
 if (!session_id()) session_start();
 $saver = \back\Saver::getSaverObject();
 if (isset($_POST['submit'])) {
@@ -65,6 +67,7 @@ if (isset($_POST['delete']) && $saver->isAdmin()) {
     <section class="flex flex-col gap-3 bg-gray-600 px-6 py-3 flex-1">
         <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-w-2">
             <?php foreach ($saver->getMassages() as $item => $massage) {
+//                var_dump($massage['sender']);
                 if ($massage['sender'] == @$_SESSION['userName']) {
                     ?>
                     <div class="chat-message myMSG">
@@ -85,7 +88,7 @@ if (isset($_POST['delete']) && $saver->isAdmin()) {
                                 </div>
                             </div>
                             <img
-                                src="<?= $saver->getImagesOfUser($massage['sender']) ?>"
+                                src="<?= $saver->getImagesOfUser($massage['sender'])[0] ?>"
                                 alt="My profile" class="w-14 h-14 rounded-full order-2">
                             <?php if ($saver->isAdmin()) { ?>
                                 <form method="post">
@@ -123,7 +126,7 @@ if (isset($_POST['delete']) && $saver->isAdmin()) {
                                 </div>
                             </div>
                             <img
-                                src="<?= $saver->getImagesOfUser($massage['sender']) ?>"
+                                src="<?= $saver->getImagesOfUser($massage['sender'])[0] ?>"
                                 alt="My profile" class="w-14 h-14 rounded-full order-1">
                             <?php if ($saver->isAdmin()) { ?>
                                 <form method="post">

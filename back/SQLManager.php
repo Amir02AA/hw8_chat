@@ -1,4 +1,5 @@
 <?php
+
 namespace back;
 
 use PDO;
@@ -13,7 +14,7 @@ class SQLManager implements DataSaverInterface
     private function __construct()
     {
         $this->pdo = new PDO($this->dns, $this->user);
-        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE , PDO::FETCH_ASSOC);
+        $this->pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $this->createDataBase();
         $this->createTables();
     }
@@ -120,33 +121,47 @@ class SQLManager implements DataSaverInterface
         $st->execute(['userName' => $pic['userName']]);
         $index = $st->fetch()['MAX(pic_index)'];
 
-        $pic['index'] =$index + 1;
+        $pic['index'] = $index + 1;
         $this->pdo->prepare("insert into pics values 
                                     (:userName,:pic,:index)")->execute($pic);
     }
 
     public function deleteImage(int $index): void
     {
+
+        $n = $this->pdo->prepare("select pic_index from pics
+                                    where user = :userName");
+        $n->execute(['userName' => @$_SESSION['userName']]);
+        $n = $n->fetchAll();
         $image = [
-            'userName' =>  @$_SESSION['userName'],
-            'index' => $index
+            'userName' => @$_SESSION['userName'],
+            'index' => $n[$index]['pic_index']
         ];
         $this->pdo->prepare("delete from pics where
                                     user = :userName and 
                                     pic_index = :index")->execute($image);
     }
 
-    public function getImagesOfUser(string $userName='')
+    public function getImagesOfUser(string $userName = '')
     {
-        $userName = ($userName == '')?  @$_SESSION['userName'] : $userName;
+        $userName = ($userName == '') ? @$_SESSION['userName'] : $userName;
         $state = $this->pdo->prepare("select pic from pics where user = :user");
         $state->execute(['user' => $userName]);
-        return $state->fetchAll();
+        $images = $state->fetchAll();
+        $images = array_map(fn($x) => $x['pic'], $images);
+//        echo "<pre>";
+//        var_dump($images);
+//        print_r($userName);
+//        echo "<pre>";
+        if (@$images[0] == "") $images = ["../UsersData/diffProf.jpg"];
+        $_SESSION[$userName] = $images;
+
+        return $images;
     }
 
     public function isAdmin()
     {
-        $userName =  @$_SESSION['userName'];
+        $userName = @$_SESSION['userName'];
         $st = $this->pdo->prepare("select isAdmin from users
                                         where userName = :userName");
         $st->execute(['userName' => $userName]);
@@ -155,7 +170,7 @@ class SQLManager implements DataSaverInterface
 
     public function isBlocked(string $userName = '')
     {
-        $userName =  ($userName == '')? @$_SESSION['userName'] : $userName;
+        $userName = ($userName == '') ? @$_SESSION['userName'] : $userName;
         $st = $this->pdo->prepare("select blocked from users
                                             where userName = :userName");
         $st->execute(['userName' => $userName]);
@@ -164,7 +179,7 @@ class SQLManager implements DataSaverInterface
 
     public function makeAdmin()
     {
-        $userName =  @$_SESSION['userName'];
+        $userName = @$_SESSION['userName'];
         $this->pdo->prepare("update users set
                                     isAdmin = 1
                                     where userName = :userName")

@@ -1,4 +1,5 @@
 <?php
+
 namespace back;
 
 class JsonManager implements DataSaverInterface
@@ -8,6 +9,7 @@ class JsonManager implements DataSaverInterface
     private array $jsonMassagesArray = [];
     private array $userData = [];
     private string $userName;
+
     private function __construct()
     {
         $this->jsonRefresh();
@@ -26,9 +28,9 @@ class JsonManager implements DataSaverInterface
         $this->getUserData();
     }
 
-    private function getUserData():void
+    private function getUserData(): void
     {
-        $userName =  @$_SESSION['userName'];
+        $userName = @$_SESSION['userName'];
         foreach ($this->jsonUsersArray as $item) {
             if ($item['userName'] == $userName) {
                 $this->userData = $item;
@@ -47,6 +49,7 @@ class JsonManager implements DataSaverInterface
             }
         }
     }
+
     /**
      * @return array
      */
@@ -67,12 +70,12 @@ class JsonManager implements DataSaverInterface
 
     public function saveUsers(): void
     {
-        file_put_contents('../front/userData.json', json_encode($this->jsonUsersArray,JSON_PRETTY_PRINT));
+        file_put_contents('../front/userData.json', json_encode($this->jsonUsersArray, JSON_PRETTY_PRINT));
     }
 
     public function saveMassages(): void
     {
-        file_put_contents('../front/msg.json', json_encode($this->jsonMassagesArray,JSON_PRETTY_PRINT));
+        file_put_contents('../front/msg.json', json_encode($this->jsonMassagesArray, JSON_PRETTY_PRINT));
     }
 
     public static function getInstance(): DataSaverInterface
@@ -104,7 +107,7 @@ class JsonManager implements DataSaverInterface
     public function deleteMassage(string $id)
     {
         foreach ($this->jsonMassagesArray as $key => $item) {
-            if ($item['id'] == $id){
+            if ($item['id'] == $id) {
                 unset($this->jsonMassagesArray[$key]);
                 $this->jsonRefresh();
                 break;
@@ -121,12 +124,13 @@ class JsonManager implements DataSaverInterface
         $this->updateUserData();
     }
 
-    public function getImagesOfUser(string $userName='')
+    public function getImagesOfUser(string $userName = '')
     {
-        $userName = ($userName == '')? $this->userData['userName'] : $userName;
-        foreach ($this->jsonUsersArray as $key =>$val){
-            if ($val['userName'] == $userName){
-                return $val['images'];
+        $userName = ($userName == '') ? $this->userData['userName'] : $userName;
+        foreach ($this->jsonUsersArray as $key => $val) {
+            if ($val['userName'] == $userName) {
+                $images = (!array_key_exists("images", $val)) ? ["../UsersData/diffProf.jpg"] : $val['images'];
+                return $images;
             }
         }
     }
@@ -143,9 +147,9 @@ class JsonManager implements DataSaverInterface
         return $this->userData['admin'];
     }
 
-    public function isBlocked(string $userName=''):bool
+    public function isBlocked(string $userName = ''): bool
     {
-        $userName =  ($userName == '')? $this->userData['userName'] : $userName;
+        $userName = ($userName == '') ? $this->userData['userName'] : $userName;
 
         foreach ($this->jsonUsersArray as $key => $item) {
             if ($item['userName'] == $userName) {

@@ -71,7 +71,7 @@ if (isset($_POST['block']) && $saver->isAdmin()){
         <div class="profile">
             <?php $currentImage = (($_GET['page'] != -1) ? $saver->getImagesOfUser()[$_GET['page']] : "../UsersData/diffProf.jpg");
             ?>
-            <img src="<?= $currentImage ?>" alt="prof" class="rounded-full prof">
+            <img src='<?= $currentImage ?>' alt="prof" class="rounded-full prof">
         </div>
         <div class="sm:flex sm:flex-1 sm:items-center sm:justify-between">
             <div>

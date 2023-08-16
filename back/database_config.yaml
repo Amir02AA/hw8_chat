@@ -1,1 +1,1 @@
-method : sql # sql or json
+method : json # sql or json
