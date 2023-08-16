@@ -60,12 +60,12 @@ class SQLManager implements DataSaverInterface
             $this->pdo->prepare("CREATE TABLE `massages` (
                                       `id` varchar(50) NOT NULL,
                                       `text` text DEFAULT NULL,
-                                      `image` varchar(255) DEFAULT NULL,
+                                      `Image` varchar(255) DEFAULT NULL,
                                       `time` int(11) DEFAULT NULL,
-                                      `sender_userName` varchar(50) DEFAULT NULL,
+                                      `sender` varchar(50) DEFAULT NULL,
                                       PRIMARY KEY (`id`),
-                                      KEY `sender_userName` (`sender_userName`),
-                                      CONSTRAINT `massages_ibfk_1` FOREIGN KEY (`sender_userName`) REFERENCES `users` (`userName`)
+                                      KEY `sender_userName` (`sender`),
+                                      CONSTRAINT `massages_ibfk_1` FOREIGN KEY (`sender`) REFERENCES `users` (`userName`)
                                     );")->execute();
         }
         $isAvailablePics = $this->pdo->query("show tables like 'pics';")->fetchAll();

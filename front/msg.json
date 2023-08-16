@@ -1,90 +1,16 @@
-{
-    "2": {
-        "id": "649cc7699e0b7",
-        "text": "Helllo",
-        "Image": false,
-        "sender": "Ali",
-        "time": 1687996265
-    },
-    "3": {
-        "id": "649cc7785818d",
-        "text": "money",
-        "Image": "..\/UsersData\/msg Images\/333609.jpg",
-        "sender": "Ali",
-        "time": 1687996280
-    },
-    "4": {
-        "id": "649cc7849404a",
-        "text": "dasfdsfasdfasdfds",
-        "Image": false,
-        "sender": "Ali",
-        "time": 1687996292
-    },
-    "5": {
-        "id": "649cc79f79081",
-        "text": "Admin here",
-        "Image": false,
+[
+    {
+        "id": "64dd2bc922685",
+        "text": "first ",
+        "Image": "",
         "sender": "Amir444",
-        "time": 1687996319
+        "time": 1692216265
     },
-    "6": {
-        "id": "649cc80e7e6ef",
-        "text": "This is the first massage im gonna try to send actually not the first one",
-        "Image": false,
-        "sender": "Sarina",
-        "time": 1687996430
-    },
-    "7": {
-        "id": "649cc81cb16f6",
-        "text": "Grammer 10\/10",
-        "Image": false,
-        "sender": "Sarina",
-        "time": 1687996444
-    },
-    "8": {
-        "id": "649d1489d24e1",
-        "text": "dsafjkldafjkldjsf",
-        "Image": false,
-        "sender": "Amir444",
-        "time": 1688016009
-    },
-    "9": {
-        "id": "64d8b6e493ef3",
-        "sender": "aa02",
-        "text": "first Sql Massage",
+    {
+        "id": "64dd2c19d2694",
+        "text": "second",
         "Image": "",
-        "time": 1691924196
-    },
-    "10": {
-        "id": "64d8cf96acfa4",
-        "text": "sadfadsf",
-        "Image": "",
-        "sender": "Amir444"
-    },
-    "11": {
-        "id": "64d8cf9b0164b",
-        "text": "aaaaaaa",
-        "Image": "",
-        "sender": "Amir444"
-    },
-    "12": {
-        "id": "64d8cfa10121f",
-        "text": "",
-        "Image": "",
-        "sender": "Amir444"
-    },
-    "13": {
-        "id": "64d8d116d9d81",
-        "text": "sdfsdfs",
-        "Image": "",
-        "sender": "Ali",
-        "time": 1691930902
-    },
-    "14": {
-        "id": "64d8d119c252d",
-        "text": "aaaa",
-        "Image": "",
-        "sender": "Ali",
-        "time": 1691930905
+        "sender": "ali",
+        "time": 1692216345
     }
-}
+]

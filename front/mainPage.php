@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
         $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
         if (in_array($ext, $imageTypes)) {
             $imagePath = "../UsersData/" . $userName . "/" . "profile_pics/" . $_FILES['file']['name'];
-            move_uploaded_file($_FILES['file']['tmp_name'], "../UsersData/" . $userName . "/" . "profile_pics/" . $_FILES['file']['name']);
+            move_uploaded_file($_FILES['file']['tmp_name'],$imagePath);
 
             $image = [
               'userName' => $userName,

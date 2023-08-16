@@ -19,11 +19,13 @@ class JsonManager implements DataSaverInterface
     {
         if (is_file('../front/userData.json')) {
             $this->jsonUsersArray = json_decode(file_get_contents('../front/userData.json'), true);
-        } else file_put_contents('../front/userData.json', []);
+        }
+//        else file_put_contents('../front/userData.json', []);
 
         if (is_file('../front/msg.json')) {
             $this->jsonMassagesArray = json_decode(file_get_contents('../front/msg.json'), true);
-        } else file_put_contents('../front/msg.json', []);
+        }
+//        else file_put_contents('../front/msg.json', []);
 
         $this->getUserData();
     }
@@ -44,6 +46,7 @@ class JsonManager implements DataSaverInterface
         foreach ($this->jsonUsersArray as $key => $user) {
             if ($this->userData['userName'] == $user['userName']) {
                 $this->jsonUsersArray[$key] = $this->userData;
+                $this->saveUsers();
                 $this->jsonRefresh();
                 break;
             }
@@ -100,7 +103,9 @@ class JsonManager implements DataSaverInterface
 
     public function addProfilePic(array $pic)
     {
+        $this->jsonRefresh();
         $this->userData['images'][] = $pic['pic'];
+
         $this->updateUserData();
     }
 
@@ -126,6 +131,7 @@ class JsonManager implements DataSaverInterface
 
     public function getImagesOfUser(string $userName = '')
     {
+        $this->jsonRefresh();
         $userName = ($userName == '') ? $this->userData['userName'] : $userName;
         foreach ($this->jsonUsersArray as $key => $val) {
             if ($val['userName'] == $userName) {

@@ -7,46 +7,27 @@
         "admin": true,
         "blocked": false,
         "images": [
-            "..\/UsersData\/Amir444\/profile_pics\/294876.jpg"
+            "..\/UsersData\/Amir444\/profile_pics\/marco-moura-3reis-corpo-inteiro.jpg",
+            "..\/UsersData\/Amir444\/profile_pics\/mk11.jpg"
         ]
     },
     {
-        "userName": "Ali",
-        "name": "AliReza",
-        "email": "arssrad8@gmail.com",
-        "password": "112233",
+        "userName": "adsfdasf",
+        "name": "afgfdsgadfd",
+        "email": "farahmqnd2003@gmail.com",
+        "password": "1234",
         "admin": false,
+        "blocked": true
+    },
+    {
+        "userName": "ali",
+        "name": "aligh",
+        "email": "ali@ali",
+        "password": "1234",
+        "admin": true,
         "blocked": false,
         "images": [
-            "..\/UsersData\/Ali\/profile_pics\/1218437.jpg",
-            "..\/UsersData\/Ali\/profile_pics\/2297894.jpg"
+            "..\/UsersData\/ali\/profile_pics\/hero_landing_us_alt.jpg"
         ]
-    },
-    {
-        "userName": "Sarina",
-        "name": "sari",
-        "email": "S@y",
-        "password": "5566",
-        "admin": false,
-        "blocked": false,
-        "images": [
-            "..\/UsersData\/Sarina\/profile_pics\/pngaaa.com-2127712.png"
-        ]
-    },
-    {
-        "userName": "aa02",
-        "name": "Amir",
-        "email": "aa02@mail",
-        "password": "123456",
-        "admin": 0,
-        "blocked": false
-    },
-    {
-        "userName": "asdfaf",
-        "name": "asdgsf",
-        "email": "asdfad@sdff",
-        "password": "adgadfs",
-        "admin": false,
-        "blocked": false
     }
 ]

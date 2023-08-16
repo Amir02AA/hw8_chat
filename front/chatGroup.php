@@ -10,10 +10,14 @@ $saver = \back\Saver::getSaverObject();
 if (isset($_POST['submit'])) {
     if (@$_FILES['pic']['name'] != "" && strlen($_POST['msg']) <= 100) {
         if (!\back\imageErrorCheck($_FILES['pic']['name'], $_FILES['pic']['size'])) {
+//            echo "<pre>";
+//            print_r($_FILES);
+//            echo "<pre>";
+            $imagesDIR = "../UsersData/msg Images/";
             $msg = [
                 'id' => uniqid(),
                 'text' => $_POST['msg'],
-                'Image' => $_FILES['pic']['name'],
+                'Image' => $imagesDIR.$_FILES['pic']['name'],
                 'sender' => @$_SESSION['userName'],
                 'time'=>time()
             ];
@@ -67,7 +71,7 @@ if (isset($_POST['delete']) && $saver->isAdmin()) {
     <section class="flex flex-col gap-3 bg-gray-600 px-6 py-3 flex-1">
         <div id="messages" class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-w-2">
             <?php foreach ($saver->getMassages() as $item => $massage) {
-//                var_dump($massage['sender']);
+//                var_dump($massage);
                 if ($massage['sender'] == @$_SESSION['userName']) {
                     ?>
                     <div class="chat-message myMSG">
